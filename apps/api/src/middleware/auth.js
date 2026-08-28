@@ -14,3 +14,20 @@ export function authMiddleware(req, res, next) {
     return fail(res, "Invalid token", 401);
   }
 }
+
+/**
+ * Server-side admin authorization guard.
+ *
+ * Verifies that an authenticated user carries the `admin` role in their JWT
+ * payload. This MUST be applied on every admin route handler in addition to
+ * any client-side routing guard — the client is never trusted.
+ */
+export function requireAdmin(req, res, next) {
+  if (!req.user) {
+    return fail(res, "Unauthorized", 401);
+  }
+  if (req.user.role !== "admin") {
+    return fail(res, "Forbidden: admin access required", 403);
+  }
+  return next();
+}

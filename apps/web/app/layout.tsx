@@ -1,5 +1,6 @@
 import "./globals.css";
 import { Navigation } from "../components/Navigation";
+import { AuthProvider } from "../context/AdminAuthContext";
 
 export const metadata = {
   title: "FreelanceFlow",
@@ -10,11 +11,13 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en">
       <body>
-        <main>
-          <h1>FreelanceFlow</h1>
-          <Navigation />
-          {children}
-        </main>
+        <AuthProvider>
+          <main>
+            <h1>FreelanceFlow</h1>
+            <Navigation />
+            {children}
+          </main>
+        </AuthProvider>
       </body>
     </html>
   );
